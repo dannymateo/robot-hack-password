@@ -16,11 +16,8 @@ import {
   Users,
   User,
   GraduationCap,
-  Calendar,
-  Circle,
   BookOpen,
   Github,
-  FileText,
 } from "lucide-react";
 import confetti from 'canvas-confetti';
 import { ToastContainer, toast } from 'react-toastify';
@@ -748,7 +745,7 @@ export default function Home() {
                 <div className="flex justify-center gap-4 pt-2">
                   <Tooltip content="Repositorio del Proyecto">
                     <Link 
-                      href="https://github.com/tu-repositorio" 
+                      href="https://github.com/dannymateo/robot-hack-password" 
                       target="_blank"
                       className="p-2 rounded-full bg-[#1a1b2e]/70 border border-[#3b82f6]/20 hover:bg-[#3b82f6]/20 transition-colors"
                     >
