@@ -24,11 +24,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { 
   Stats, 
-  CHARS, 
   calculatePasswordStats, 
   formatPercentage, 
   generateWorkerCode 
-} from './utils/passwordUtils';
+} from '../utils/passwordUtils';
 import Link from 'next/link';
 import { Tooltip } from '@nextui-org/react';
 
@@ -39,7 +38,7 @@ const geistSans = Geist({
 
 declare global {
   interface Window {
-    confetti: any;
+    confetti: typeof confetti;
   }
 }
 
@@ -68,68 +67,6 @@ export default function Home() {
 
   const SIMULATION_TIME = 10000; // 10 segundos
   const UPDATES_PER_SECOND = 20; // Aumentamos las actualizaciones para más fluidez
-
-  const simulateBruteForce = async () => {
-    const totalSteps = SIMULATION_TIME / (1000 / UPDATES_PER_SECOND);
-    const attemptsPerStep = Math.floor(stats.totalPossibleCombinations / totalSteps);
-    
-    const generateAttempt = () => {
-      const elapsedTime = Date.now() - startTime;
-      const timeProgress = (elapsedTime / SIMULATION_TIME) * 100;
-      
-      // En los últimos 2 segundos, generamos intentos más cercanos
-      if (timeProgress > 80) {
-        let attempt = '';
-        for (let i = 0; i < password.length; i++) {
-          // 90% de probabilidad de acertar cada carácter
-          if (Math.random() > 0.1) {
-            attempt += password[i];
-          } else {
-            attempt += CHARS[Math.floor(Math.random() * CHARS.length)];
-          }
-        }
-        return attempt;
-      }
-      
-      return Array(password.length)
-        .fill(0)
-        .map(() => CHARS[Math.floor(Math.random() * CHARS.length)])
-        .join('');
-    };
-
-    const attempt = generateAttempt();
-    setCurrentAttempt(attempt);
-    setAttemptCount(prev => prev + attemptsPerStep);
-
-    const elapsedTime = Date.now() - startTime;
-    const timeProgress = (elapsedTime / SIMULATION_TIME) * 100;
-    
-    // Actualizamos la estrategia basada en el tiempo transcurrido
-    if (timeProgress < 30) {
-      setStats(prev => ({
-        ...prev,
-        currentStrategy: "Análisis de patrones comunes"
-      }));
-    } else if (timeProgress < 60) {
-      setStats(prev => ({
-        ...prev,
-        currentStrategy: "Aplicando fuerza bruta optimizada"
-      }));
-    } else if (timeProgress < 90) {
-      setStats(prev => ({
-        ...prev,
-        currentStrategy: "Refinando búsqueda en segmento específico"
-      }));
-    }
-
-    // Encontramos la contraseña en los últimos 2 segundos
-    if (timeProgress > 80 && attempt === password) {
-      setCurrentAttempt(password);
-      return true;
-    }
-
-    return false;
-  };
 
   const showAlert = (message: string) => {
     toast.error(message, {
@@ -664,7 +601,7 @@ export default function Home() {
                     No se recomienda usar con contraseñas de más de 5 caracteres.
                   </p>
                   <p className="text-sm text-[#3b82f6] mt-4 p-2 bg-[#3b82f6]/10 rounded-lg border border-[#3b82f6]/30">
-                     Prueba recomendada: "ZbcAA" (30 segundos aprox.)
+                     Prueba recomendada: &quot;ZbcAA&quot; (30 segundos aprox.)
                   </p>
                 </div>
                 
