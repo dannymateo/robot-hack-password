@@ -305,7 +305,7 @@ export default function Home() {
                 </h1>
                 <div className="flex items-center justify-center gap-2 text-[#3b82f6]">
                   <ShieldAlert className="w-5 h-5 animate-pulse" />
-                  <p className="text-sm">Protocolo de Seguridad Nivel Alpha</p>
+                  <p className="text-sm">Protocolo de Seguridad Nivel ITM</p>
                 </div>
               </div>
             </CardHeader>
