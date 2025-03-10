@@ -124,7 +124,13 @@ export const generateWorkerCode = () => `
       const currentTime = Date.now();
       const elapsedTime = currentTime - startTime;
       
+      // Verificación más estricta del tiempo límite
       if (timeLimit !== Infinity && elapsedTime >= timeLimit) {
+        postMessage({
+          type: 'notFound',
+          attempts,
+          current: 'Tiempo límite alcanzado'
+        });
         return;
       }
 
@@ -160,4 +166,4 @@ export const generateWorkerCode = () => `
     const { password, maxLength, timeLimit } = e.data;
     bruteForce(password, maxLength, timeLimit);
   };
-`; 
+`;
